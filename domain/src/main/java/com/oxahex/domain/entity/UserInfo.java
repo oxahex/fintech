@@ -17,17 +17,17 @@ import javax.persistence.*;
 public class UserInfo {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    Long id;
+    private Long id;
 
     @Column(name = "usr_key")
-    String userKey;
+    private String userKey;
 
     @Column(name = "usr_reg_num")
-    String userRegistrationNumber;
+    private String userRegistrationNumber;
 
     @Column(name = "usr_nm")
-    String userName;
+    private String userName;
 
     @Column(name = "usr_icm_amt")
-    Long userIncomeAmount;
+    private Long userIncomeAmount;
 }
