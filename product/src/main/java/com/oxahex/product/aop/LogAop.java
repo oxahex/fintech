@@ -17,7 +17,7 @@ import java.lang.reflect.Method;
 public class LogAop {
 
     // 컨트롤러 이해의 모든 패키지, 클래스 이하 모든 메서드에 적용
-    @Pointcut("execution(* com.oxahex.user.controller..*.*(..))")
+    @Pointcut("execution(* com.oxahex.product.controller..*.*(..))")
     private void cut() {}
 
     // 포인트컷으로 필터링된 경로롤 들어오는 경우 메서드 호출 전에 적용
