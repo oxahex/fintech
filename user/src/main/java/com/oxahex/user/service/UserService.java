@@ -50,17 +50,14 @@ public class UserService {
 
 
     @Transactional(readOnly = true)
-    public UserInfoDto.Response findUser(String userKey) throws GeneralSecurityException {
+    public UserInfoDto.Response findUser(String userKey) {
 
         // 유저 키로 유저 찾고
         UserInfo userInfo = userInfoRepository.findUserInfoByUserKey(userKey)
                 .orElseThrow(() -> new UserException(ErrorCode.USER_NOT_FOUND));
 
-        // 복호화
-        String regNum = encryptService.decryptString(userInfo.getUserRegistrationNumber());
-
         return UserInfoDto.Response.builder()
                 .userKey(userKey)
-                .userRegistrationNumber(regNum).build();
+                .userRegistrationNumber(userInfo.getUserRegistrationNumber()).build();
     }
 }

@@ -1,6 +1,7 @@
 package com.oxahex.user.aop;
 
 import com.oxahex.user.annotation.Encrypt;
+import com.oxahex.user.dto.UserInfoDto;
 import com.oxahex.user.util.encrypt.EncryptService;
 import lombok.RequiredArgsConstructor;
 import org.aspectj.lang.JoinPoint;
@@ -22,11 +23,11 @@ public class EncryptAop {
     private final EncryptService encryptService;
 
 
-    @Pointcut("execution(* com.oxahex.user.service.*.find*(..))")
-    public void findMethods() {};
-
     @Pointcut("execution(* com.oxahex.user.service.*.save*(..))")
     public void saveMethods() {}
+
+    @Pointcut("execution(* com.oxahex.user.service.*.find*(..))")
+    public void findMethods() {};
 
     // saveUser 할 때, 암호화 해서 저장
     @Before("saveMethods()")
@@ -44,9 +45,15 @@ public class EncryptAop {
     }
 
     // findUser 시 복호화 해서 return
-    @AfterReturning("findMethods()")
-    public void afterFind(JoinPoint joinPoint) {
+    @AfterReturning(value = "findMethods()", returning = "response")
+    public void afterFind(JoinPoint joinPoint, UserInfoDto.Response response) throws IllegalAccessException, GeneralSecurityException {
         System.out.println("복호: args" + Arrays.toString(joinPoint.getArgs()));
+        System.out.println("복호: args" + response.getUserRegistrationNumber());
+
+        response.setUserRegistrationNumber(
+                encryptService.decryptString(response.getUserRegistrationNumber())
+        );
+
     }
 
 }

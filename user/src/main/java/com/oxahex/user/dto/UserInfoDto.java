@@ -19,6 +19,7 @@ public class UserInfoDto {
     }
 
     @Getter
+    @Setter
     @Builder
     @ToString
     public static class Response {
