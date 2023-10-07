@@ -9,6 +9,7 @@ import com.oxahex.user.util.encrypt.EncryptService;
 import com.oxahex.user.util.keygen.GenerateKey;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.security.GeneralSecurityException;
 
@@ -25,6 +26,7 @@ public class UserService {
      * @param request 등록할 유저 정보
      * @return 유저 고유 키 반환
      */
+    @Transactional
     public UserInfoDto.Response addUser(UserInfoDto.Request request) throws GeneralSecurityException{
 
         // TODO: pointcut
@@ -51,6 +53,7 @@ public class UserService {
     }
 
 
+    @Transactional(readOnly = true)
     public UserInfoDto.Response getUserInfo(String userKey) throws GeneralSecurityException {
 
         // 유저 키로 유저 찾고
@@ -64,12 +67,4 @@ public class UserService {
                 .userKey(userKey)
                 .userRegistrationNumber(regNum).build();
     }
-
-
-
-    private void validateUser(String userRegistrationNumber) {
-        // 유저 주민번호가 이미 암호화 되어 DB에 저장되어 있으면 이미 존재하는 유저 ERROR
-
-    }
-
 }

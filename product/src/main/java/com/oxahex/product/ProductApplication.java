@@ -6,6 +6,7 @@ import org.springframework.boot.autoconfigure.domain.EntityScan;
 import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
+import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 //@ComponentScan(basePackages = {"com.oxahex.domain.*"})      // TODO: 이거 Configuration 따로 뺄 수 있었던 것 같으니까 확인
 @ComponentScan(basePackages = {"com.oxahex.*.*"})
@@ -13,6 +14,7 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 @EntityScan(basePackages = {"com.oxahex.domain.entity"})
 @SpringBootApplication
 @EnableCaching
+@EnableTransactionManagement
 public class ProductApplication {
     public static void main(String[] args) {
         SpringApplication.run(ProductApplication.class, args);

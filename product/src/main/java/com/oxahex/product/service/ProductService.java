@@ -8,6 +8,7 @@ import com.oxahex.domain.type.OrganizationCode;
 import lombok.RequiredArgsConstructor;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -18,6 +19,7 @@ public class ProductService {
 
     private final ProductInfoRepository productInfoRepository;
 
+    @Transactional(readOnly = true)
     @Cacheable(value = "product", key = "#organizationCode.name()", cacheManager = "redisCacheManager")
     public List<ProductInfoDto.Response> getProductInfoList(OrganizationCode organizationCode) {
 
@@ -33,6 +35,7 @@ public class ProductService {
 
     }
 
+    @Transactional
     public void addProductInfo(ProductInfoDto.Request request) {
 
         System.out.println("service:: request -> " + request);
