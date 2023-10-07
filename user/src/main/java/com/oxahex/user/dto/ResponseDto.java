@@ -20,7 +20,7 @@ public class ResponseDto {
     @AllArgsConstructor
     @Builder
     public static class Fail {
-        private final int status;
+        private final int errorCode;
         private final String errorMessage;
     }
 }

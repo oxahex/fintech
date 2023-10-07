@@ -20,14 +20,14 @@ public class GlobalExceptionHandler {
         // TODO 로거 사용
 
         return ResponseDto.Fail.builder()
-                .status(e.getResponseCode().value())
+                .errorCode(e.getResponseCode().value())
                 .errorMessage(e.getResponseMessage()).build();
     }
 
     @ExceptionHandler(GeneralSecurityException.class)
     public ResponseDto.Fail handleGeneralSecurityException(GeneralSecurityException e) {
         return ResponseDto.Fail.builder()
-                .status(ErrorCode.ENCRYPT_FAIL.getStatus().value())
+                .errorCode(ErrorCode.ENCRYPT_FAIL.getStatus().value())
                 .errorMessage(ErrorCode.ENCRYPT_FAIL.getDescription()).build();
     }
 
