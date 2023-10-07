@@ -6,6 +6,7 @@ import com.oxahex.domain.type.ProductCode;
 import com.oxahex.product.dto.ProductInfoDto;
 import com.oxahex.domain.type.OrganizationCode;
 import lombok.RequiredArgsConstructor;
+import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -20,7 +21,7 @@ public class ProductService {
     private final ProductInfoRepository productInfoRepository;
 
     @Transactional(readOnly = true)
-    @Cacheable(value = "product", key = "#organizationCode.name()", cacheManager = "redisCacheManager")
+    @Cacheable(value = "product", key = "#organizationCode.organizationCode", cacheManager = "redisCacheManager")
     public List<ProductInfoDto.Response> getProductInfoList(OrganizationCode organizationCode) {
 
         // 기관명과 일치하는 상품을 리스트에서 찾음
@@ -36,14 +37,11 @@ public class ProductService {
     }
 
     @Transactional
+    @CacheEvict(value = "product", key = "#request.organizationCode", cacheManager = "redisCacheManager")
     public void addProductInfo(ProductInfoDto.Request request) {
-
-        System.out.println("service:: request -> " + request);
 
         ProductCode productCode = ProductCode.getCode(request.getProductCode());
         OrganizationCode organizationCode = OrganizationCode.getCode(request.getOrganizationCode());
-
-        // -> 현재 상품을 식별할 수 있는 데이터가 주어지지 않았으므로 존재 여부 확인하지 않고 그냥 모두 추가
 
         // 상품 추가
         ProductInfo productInfo = productInfoRepository.save(
@@ -56,9 +54,6 @@ public class ProductService {
         );
 
         // 상품 정보 추가
-        // 상품 id를 상품 리스트에 추가
         productInfoRepository.save(productInfo);
-
-        System.out.println("추가된 상품 -> " + productInfo);
     }
 }
