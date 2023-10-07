@@ -27,14 +27,14 @@ public class UserService {
      * @return 유저 고유 키 반환
      */
     @Transactional
-    public UserInfoDto.Response addUser(UserInfoDto.Request request) throws GeneralSecurityException{
+    public UserInfoDto.Response saveUser(UserInfoDto.Request request) throws GeneralSecurityException{
 
         // TODO: pointcut
         // 주민번호 암호화
-        String encryptedRegNum = encryptService.encryptText(request.getUserRegistrationNumber());
+//        String encryptedRegNum = encryptService.encryptText(request.getUserRegistrationNumber());
 
         // validation
-        boolean isExistUser = userInfoRepository.existsByUserRegistrationNumber(encryptedRegNum);
+        boolean isExistUser = userInfoRepository.existsByUserRegistrationNumber(request.getUserRegistrationNumber());
         if (isExistUser) throw new UserException(ErrorCode.USER_ALREADY_EXIST);
 
 
@@ -46,7 +46,7 @@ public class UserService {
                         .userName(request.getUserName())
                         .userKey(userKey)
                         .userIncomeAmount(request.getUserIncomeAmount())
-                        .userRegistrationNumber(encryptedRegNum).build());
+                        .userRegistrationNumber(request.getUserRegistrationNumber()).build());
 
         return UserInfoDto.Response.builder()
                 .userKey(userKey).build();
@@ -54,7 +54,7 @@ public class UserService {
 
 
     @Transactional(readOnly = true)
-    public UserInfoDto.Response getUserInfo(String userKey) throws GeneralSecurityException {
+    public UserInfoDto.Response findUser(String userKey) throws GeneralSecurityException {
 
         // 유저 키로 유저 찾고
         UserInfo userInfo = userInfoRepository.findUserInfoByUserKey(userKey)

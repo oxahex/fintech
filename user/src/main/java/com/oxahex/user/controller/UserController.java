@@ -1,12 +1,10 @@
 package com.oxahex.user.controller;
 
-import com.oxahex.domain.entity.UserInfo;
 import com.oxahex.user.dto.ResponseDto;
 import com.oxahex.user.dto.UserInfoDto;
 import com.oxahex.user.service.UserService;
 import com.oxahex.user.type.SuccessCode;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.RequestEntity;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -31,7 +29,7 @@ public class UserController {
 
         return ResponseEntity.ok().body(
                 ResponseDto.Success.builder()
-                .data(userService.addUser(request))
+                .data(userService.saveUser(request))
                 .responseCode(SuccessCode.SUCCESS.getStatus().value())
                 .responseMessage(SuccessCode.SUCCESS.getDescription()).build()
         );
@@ -44,7 +42,7 @@ public class UserController {
 
         return ResponseEntity.ok(
                 ResponseDto.Success.builder()
-                        .data(userService.getUserInfo(userKey))
+                        .data(userService.findUser(userKey))
                         .responseCode(SuccessCode.SUCCESS.getStatus().value())
                         .responseMessage(SuccessCode.SUCCESS.getDescription()).build()
         );
