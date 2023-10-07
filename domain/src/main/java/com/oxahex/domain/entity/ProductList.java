@@ -3,14 +3,16 @@ package com.oxahex.domain.entity;
 import com.oxahex.domain.converter.OrganizationCodeConverter;
 import com.oxahex.domain.type.OrganizationCode;
 import lombok.RequiredArgsConstructor;
+import lombok.ToString;
 
 import javax.persistence.*;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
-@RequiredArgsConstructor
 @Table(name = "PRODUCT_LIST")
+@RequiredArgsConstructor
+@ToString
 public class ProductList {
 
     @Id
@@ -25,7 +27,7 @@ public class ProductList {
 
     @Column(name = "prod_cd")
     @OneToMany(mappedBy = "productId")
-    private Set<ProductInfo> productInfoList = new HashSet<>();
+    private List<ProductInfo> productInfoList = new ArrayList<>();
 
     public void add(ProductInfo productInfo) {
         this.productInfoList.add(productInfo);

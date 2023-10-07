@@ -4,20 +4,17 @@ import com.oxahex.domain.converter.OrganizationCodeConverter;
 import com.oxahex.domain.converter.ProductCodeConverter;
 import com.oxahex.domain.type.OrganizationCode;
 import com.oxahex.domain.type.ProductCode;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.RequiredArgsConstructor;
-import lombok.ToString;
+import lombok.*;
 
 import javax.persistence.*;
 
 @Entity
-@Embeddable
+@Table(name = "PRODUCT_INFO")
+@Getter
 @RequiredArgsConstructor
 @AllArgsConstructor
 @Builder
 @ToString
-@Table(name = "PRODUCT_INFO")
 public class ProductInfo {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

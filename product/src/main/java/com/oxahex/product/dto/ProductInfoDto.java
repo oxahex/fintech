@@ -21,4 +21,16 @@ public class ProductInfoDto {
         private Double productMinimumInterest;
         private String productName;
     }
+
+    @Getter
+    @AllArgsConstructor
+    @Builder
+    @ToString
+    public static class Response {
+        private OrganizationCode organizationCode;
+        private ProductCode productCode;
+        private Double productMaximumInterest;
+        private Double productMinimumInterest;
+        private String productName;
+    }
 }

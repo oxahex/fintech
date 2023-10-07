@@ -25,23 +25,17 @@ public class ProductController {
             @PathVariable OrganizationCode organizationCode
     ) {
 
-        System.out.println("orgcode: " + organizationCode);
-
-
-
-        // 기관 코드를 변경함 숫자로 변경함
-        List<ProductInfoDto> productList = productService.getProductInfoList(organizationCode);
-
-        // 변경한 숫자로 상품 데이터를 찾음
-
-
-        return null;
+        return ResponseEntity.ok(ResponseDto.Success.builder()
+                .data(productService.getProductInfoList(organizationCode))
+                .responseCode(SuccessCode.SUCCESS.getStatus().value())
+                .responseMessage(SuccessCode.SUCCESS.getDescription())
+                .build());
     }
 
     /**
      * 상품 추가
      * @param request 추가할 상품 정보
-     * @return
+     * @return 요청 성공 여부
      */
     @PostMapping("/information")
     public ResponseEntity<BaseResponseDto> addProduct(

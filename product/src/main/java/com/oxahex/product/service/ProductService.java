@@ -9,6 +9,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -16,11 +17,20 @@ public class ProductService {
 
     private final ProductInfoRepository productInfoRepository;
 
-    public List<ProductInfoDto> getProductInfoList(OrganizationCode code) {
+    public List<ProductInfoDto.Response> getProductInfoList(OrganizationCode organizationCode) {
+
+        // 기관명과 일치하는 상품을 리스트에서 찾음
+        List<ProductInfo> productList = productInfoRepository.findAllByOrganizationCode(organizationCode);
 
 
 
-        return null;
+
+        return productList.stream().map(x -> ProductInfoDto.Response.builder()
+                .productName(x.getProductName())
+                .productCode(x.getProductCode())
+                .productMaximumInterest(x.getProductMaximumInterest())
+                .productMinimumInterest(x.getProductMinimumInterest())
+                .organizationCode(x.getOrganizationCode()).build()).collect(Collectors.toList());
 
     }
 
@@ -43,8 +53,10 @@ public class ProductService {
                         .productMinimumInterest(request.getProductMinimumInterest()).build()
         );
 
-        System.out.println("추가된 상품 -> " + productInfo);
-
+        // 상품 정보 추가
+        // 상품 id를 상품 리스트에 추가
         productInfoRepository.save(productInfo);
+
+        System.out.println("추가된 상품 -> " + productInfo);
     }
 }
