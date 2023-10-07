@@ -2,10 +2,7 @@ package com.oxahex.product.dto;
 
 import com.oxahex.domain.type.OrganizationCode;
 import com.oxahex.domain.type.ProductCode;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.ToString;
+import lombok.*;
 
 
 public class ProductInfoDto {
@@ -23,6 +20,7 @@ public class ProductInfoDto {
     }
 
     @Getter
+    @NoArgsConstructor
     @AllArgsConstructor
     @Builder
     @ToString

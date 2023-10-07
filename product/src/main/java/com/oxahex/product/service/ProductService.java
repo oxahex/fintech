@@ -6,6 +6,7 @@ import com.oxahex.domain.type.ProductCode;
 import com.oxahex.product.dto.ProductInfoDto;
 import com.oxahex.domain.type.OrganizationCode;
 import lombok.RequiredArgsConstructor;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -17,13 +18,11 @@ public class ProductService {
 
     private final ProductInfoRepository productInfoRepository;
 
+    @Cacheable(value = "product", key = "#organizationCode.name()", cacheManager = "redisCacheManager")
     public List<ProductInfoDto.Response> getProductInfoList(OrganizationCode organizationCode) {
 
         // 기관명과 일치하는 상품을 리스트에서 찾음
         List<ProductInfo> productList = productInfoRepository.findAllByOrganizationCode(organizationCode);
-
-
-
 
         return productList.stream().map(x -> ProductInfoDto.Response.builder()
                 .productName(x.getProductName())
