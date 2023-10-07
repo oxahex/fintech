@@ -27,11 +27,7 @@ public class UserService {
      * @return 유저 고유 키 반환
      */
     @Transactional
-    public UserInfoDto.Response saveUser(UserInfoDto.Request request) throws GeneralSecurityException{
-
-        // TODO: pointcut
-        // 주민번호 암호화
-//        String encryptedRegNum = encryptService.encryptText(request.getUserRegistrationNumber());
+    public UserInfoDto.Response saveUser(UserInfoDto.Request request) {
 
         // validation
         boolean isExistUser = userInfoRepository.existsByUserRegistrationNumber(request.getUserRegistrationNumber());
