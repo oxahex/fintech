@@ -7,6 +7,13 @@ plugins {
 group = 'com.oxahex'
 version = '0.0.1-SNAPSHOT'
 
+bootJar {
+    enabled = false
+}
+jar {
+    enabled = true
+}
+
 repositories {
     mavenCentral()
 }
@@ -16,7 +23,6 @@ allprojects {
         mavenCentral()
     }
 }
-
 
 subprojects {
 
@@ -38,15 +44,56 @@ subprojects {
         implementation("org.springframework.boot:spring-boot-starter")
         testImplementation("org.springframework.boot:spring-boot-starter-test")
 
-//        implementation 'io.springfox:springfox-boot-starter:3.0.0'
-
         compileOnly 'org.projectlombok:lombok'
         annotationProcessor 'org.projectlombok:lombok'
     }
 }
 
+project(":user") {
+    dependencies {
+        implementation(project(":domain"))
+        implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+        implementation 'org.springframework.boot:spring-boot-starter-web'
+        implementation 'io.springfox:springfox-boot-starter:3.0.0'
+        implementation 'io.springfox:springfox-swagger-ui:3.0.0'
 
+        implementation 'org.springframework.boot:spring-boot-starter-aop'
+    }
 
-//tasks.named('test') {
-//    useJUnitPlatform()
-//}
+    bootJar {
+        enabled true
+    }
+}
+
+project(":product") {
+    dependencies {
+        implementation(project(":domain"))
+        implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+        implementation 'org.springframework.boot:spring-boot-starter-web'
+        implementation 'io.springfox:springfox-boot-starter:3.0.0'
+        implementation 'io.springfox:springfox-swagger-ui:3.0.0'
+
+        implementation 'org.springframework.boot:spring-boot-starter-aop'
+
+        implementation 'org.springframework.boot:spring-boot-starter-data-redis'
+    }
+
+    bootJar {
+        enabled true
+    }
+}
+
+project(":domain") {
+    jar {
+        enabled true
+    }
+    bootJar {
+        enabled false
+    }
+
+    dependencies {
+        implementation("org.springframework.boot:spring-boot-starter-data-jpa:2.7.6")
+        runtimeOnly('mysql:mysql-connector-java')
+        implementation("org.springframework.boot:spring-boot-starter-data-redis")
+    }
+}

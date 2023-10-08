@@ -1,0 +1,26 @@
+services:
+  user:
+    image: user-api:1.0.0
+    container_name: user-api
+    ports:
+      - "8081:8081"
+    networks:
+      - fintech
+  product:
+    image: product-api:1.0.0
+    container_name: product-api
+    ports:
+      - "8080:8080"
+    networks:
+      - fintech
+  nginx:
+    image: nginx:1.0.0
+    container_name: nginx
+    ports:
+      - "8085:8085"
+    networks:
+      - fintech
+
+networks:
+  fintech:
+    driver: bridge

@@ -2,18 +2,4 @@ plugins {}
 
 version = '0.0.1'
 
-dependencies {
-    implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
-    implementation 'org.springframework.boot:spring-boot-starter-web'
-    implementation 'io.springfox:springfox-boot-starter:3.0.0'
-    implementation 'io.springfox:springfox-swagger-ui:3.0.0'
-
-    implementation 'org.springframework.boot:spring-boot-starter-aop'
-
-    implementation 'org.springframework.boot:spring-boot-starter-data-redis'
-
-
-//    testImplementation 'org.springframework.boot:spring-boot-starter-test'
-
-    implementation(project(":domain"))
-}
+dependencies {}
